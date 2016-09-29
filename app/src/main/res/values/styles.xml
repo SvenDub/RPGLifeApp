@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MainMenuButton" parent="Base.Widget.AppCompat.Button">
+        <item name="android:height">80dp</item>
+    </style>
+
 </resources>
