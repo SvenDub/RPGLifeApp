@@ -10,6 +10,8 @@
 
     <style name="MainMenuButton" parent="Base.Widget.AppCompat.Button">
         <item name="android:height">80dp</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:background">@drawable/mainmenubutton</item>
     </style>
 
 </resources>
