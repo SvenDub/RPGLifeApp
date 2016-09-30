@@ -5,7 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import questionablequality.rpglifeapp.adapter.QuestAdapter;
 import questionablequality.rpglifeapp.databinding.ActivityQuestLogBinding;
+import questionablequality.rpglifeapp.provider.QuestProvider;
 
 public class QuestLogActivity extends AppCompatActivity {
 
@@ -21,5 +23,9 @@ public class QuestLogActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        QuestProvider QP = new QuestProvider(this);
+        QuestAdapter QA = new QuestAdapter(this, QP.ReturnQuests());
+        binding.LstQuests.setAdapter(QA);
     }
 }
