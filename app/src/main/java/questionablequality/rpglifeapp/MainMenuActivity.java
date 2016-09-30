@@ -2,8 +2,8 @@ package questionablequality.rpglifeapp;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import questionablequality.rpglifeapp.data.*;
@@ -30,6 +30,14 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
+        binding.btnOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.mu);
+                mediaPlayer.start();
+
+            }
+        });
 
     }
 }
