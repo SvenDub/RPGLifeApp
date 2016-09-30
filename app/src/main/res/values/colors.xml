@@ -8,4 +8,6 @@
     <color name="colorButtonStyleDark">#bf360c</color>
 
     <color name="ScrollBackground">#47ff62ff</color>
+
+    <color name="BackButton">#FF0000</color>
 </resources>

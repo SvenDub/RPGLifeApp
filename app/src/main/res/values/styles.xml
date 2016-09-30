@@ -16,8 +16,9 @@
 
     <style name="BackButton" parent="Base.Widget.AppCompat.Button">
         <item name="android:layout_height">50dp</item>
-        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_width">100dp</item>
         <item name="android:layout_margin">2dp</item>
+        <item name="android:background">@color/BackButton</item>
         <item name="android:text">&lt;</item>
     </style>
 

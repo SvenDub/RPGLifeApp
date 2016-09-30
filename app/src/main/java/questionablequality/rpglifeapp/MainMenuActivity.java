@@ -1,5 +1,6 @@
 package questionablequality.rpglifeapp;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -24,8 +25,8 @@ public class MainMenuActivity extends AppCompatActivity {
         binding.btnQuestLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Vibrator vib = (Vibrator)getSystemService(VIBRATOR_SERVICE);
-                vib.vibrate(1000);
+                Intent intent = new Intent(MainMenuActivity.this, QuestLogActivity.class);
+                startActivity(intent);
             }
         });
 
