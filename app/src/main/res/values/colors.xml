@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
 
-    <color name="colorButtonStyle">#e65100</color>
-    <color name="colorButtonStyleDark">#bf360c</color>
+    <color name="DefaultColor">#CCAA00</color>
+    <color name="DefaultColorDark">#AA8800</color>
+    <color name="DefaultColorAccent">#AACC00</color>
+
+    <color name="colorButtonStyle">#000000</color>
 
     <color name="ScrollBackground">#47ff62ff</color>
 
-    <color name="BackButton">#FF0000</color>
+    <color name="BackButton">#CC0000</color>
+
 </resources>

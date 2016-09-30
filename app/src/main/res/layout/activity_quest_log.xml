@@ -11,7 +11,7 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight=".15">
+            android:layout_weight="1">
         </ListView>
 
         <LinearLayout
@@ -19,29 +19,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="bottom"
-            android:layout_weight="1">
+            android:layout_weight="5">
 
-            <Button
+            <Button style="@style/DefaultButton"
                 android:text="Add Quest"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/BtnAddQuest" />
+                android:layout_height="match_parent"
+                android:id="@+id/BtnAddQuest"
+                android:layout_weight="1" />
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="bottom">
+                android:gravity="bottom"
+                android:layout_weight="1">
 
-                <Button
+                <Button style="@style/BackButton"
                     android:id="@+id/BtnBack"
-                    android:layout_weight="1"
-                    style="@style/BackButton" />
+                    android:layout_weight="1" />
 
-                <Button
+                <Button style="@style/DefaultButton"
                     android:text="Button"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:id="@+id/BtnFilter"
                     android:layout_weight="1" />
             </LinearLayout>

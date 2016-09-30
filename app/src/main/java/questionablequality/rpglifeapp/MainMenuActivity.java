@@ -18,25 +18,38 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Initialize the DataBinding Viewbinding
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main_menu);
 
+        //Data binding the data element "User"
         binding.setUser((User)getIntent().getSerializableExtra("User"));
 
+
+        //Setting the Buttons OnClick events
         binding.btnQuestLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainMenuActivity.this, QuestLogActivity.class);
-                startActivity(intent);
-            }
+                startActivity(intent);    }
         });
+
+        binding.btnGuild.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }   });
+
+        binding.btnOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }   });
 
         binding.btnOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.mu);
-                mediaPlayer.start();
-
-            }
+                mediaPlayer.start();    }
         });
 
     }

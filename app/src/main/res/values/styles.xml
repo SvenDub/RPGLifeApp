@@ -3,20 +3,25 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/DefaultColor</item>
+        <item name="colorPrimaryDark">@color/DefaultColorDark</item>
+        <item name="colorAccent">@color/DefaultColorAccent</item>
     </style>
 
     <style name="MainMenuButton" parent="Base.Widget.AppCompat.Button">
-        <item name="android:height">100dp</item>
-        <item name="android:layout_margin">2dp</item>
-        <item name="android:background">@drawable/mainmenubutton</item>
+        <item name="android:background">@drawable/main_menu_button</item>
+        <item name="android:layout_margin">1dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="DefaultButton" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">@color/DefaultColor</item>
+        <item name="android:layout_margin">1dp</item>
     </style>
 
     <style name="BackButton" parent="Base.Widget.AppCompat.Button">
-        <item name="android:layout_height">50dp</item>
-        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">150dp</item>
         <item name="android:layout_margin">2dp</item>
         <item name="android:background">@color/BackButton</item>
         <item name="android:text">&lt;</item>
