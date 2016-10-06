@@ -1,25 +1,25 @@
 package questionablequality.rpglifeapp;
 
+import android.Manifest;
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.databinding.DataBindingUtil;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
-
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -31,13 +31,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.JsonObject;
+import com.koushikdutta.ion.Ion;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import questionablequality.rpglifeapp.data.User;
 import questionablequality.rpglifeapp.databinding.ActivityLoginBinding;
-
-import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
@@ -56,6 +58,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private UserLoginTask mAuthTask = null;
 
+    private AccountManager mAccountManager;
+
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
@@ -65,6 +69,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mAccountManager = AccountManager.get(this);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS) == PackageManager.PERMISSION_GRANTED) {
+            Account[] accounts = mAccountManager.getAccountsByType("questionablequality.rpglifeapp");
+            if (accounts.length > 0) {
+                finish();
+                startActivity(new Intent(this, MainMenuActivity.class));
+                return;
+            }
+        } else {
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.GET_ACCOUNTS}, 1);
+        }
 
         //sets the view binding.
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
@@ -260,6 +277,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         private final String mEmail;
         private final String mPassword;
 
+        private String mAccessToken;
+
         UserLoginTask(String email, String password) {
             mEmail = email;
             mPassword = password;
@@ -267,17 +286,26 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
+            JsonObject request = new JsonObject();
+            request.addProperty("username", mEmail);
+            request.addProperty("password", mPassword);
 
             try {
-                // Simulate network access.
-                Thread.sleep(20);
-            } catch (InterruptedException e) {
+                JsonObject response = Ion.with(LoginActivity.this)
+                        .load("http://svendubbeld.nl:12345/login")
+                        .setJsonObjectBody(request)
+                        .asJsonObject()
+                        .get();
+
+                if (response != null && response.has("accessToken")) {
+                    mAccessToken = response.get("accessToken").getAsString();
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (InterruptedException | ExecutionException e) {
                 return false;
             }
-
-            // TODO: register the new account here.
-            return true;
         }
 
         @Override
@@ -286,6 +314,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
+                final Account account = new Account(mEmail, "questionablequality.rpglifeapp");
+                mAccountManager.addAccountExplicitly(account, mAccessToken, null);
+
                 finish();
                 Intent i = new Intent(LoginActivity.this, MainMenuActivity.class);
                 i.putExtra("User", new User(mEmail));
