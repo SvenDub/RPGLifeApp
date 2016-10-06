@@ -16,4 +16,5 @@
     <string name="action_other">Other</string>
     <string name="action_options">Options</string>
     <string name="title_activity_add_quest">AddQuestActivity</string>
+    <string name="delete_account">Auth invalid. Deleting account.</string>
 </resources>
