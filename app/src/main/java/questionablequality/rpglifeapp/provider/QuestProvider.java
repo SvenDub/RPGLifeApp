@@ -20,6 +20,10 @@ public class QuestProvider {
         this.context = context;
     }
 
+    /**
+     * Returns a dummy array of quests.
+     * @return an array of quests.
+     */
     public List<Quest> ReturnQuests(){
         ArrayList<Quest> quests;
         quests = new ArrayList<>();

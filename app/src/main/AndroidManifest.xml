@@ -25,7 +25,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainMenuActivity" />
-        <activity android:name=".QuestLogActivity"/>
+        <activity android:name=".QuestLogActivity" />
+        <activity android:name=".AddQuestActivity" />
+
 
         <service android:name=".auth.AuthenticatorService">
             <intent-filter>

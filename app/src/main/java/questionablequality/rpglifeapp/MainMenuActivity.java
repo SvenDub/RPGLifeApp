@@ -6,7 +6,6 @@ import android.accounts.AccountManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -47,7 +46,8 @@ public class MainMenuActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main_menu);
 
         //Data binding the data element "User"
-        binding.setUser((User) getIntent().getSerializableExtra("User"));
+        User user = (User)getIntent().getSerializableExtra("User");
+        binding.setUser(user);
 
 
         //Setting the Buttons OnClick events
@@ -76,10 +76,12 @@ public class MainMenuActivity extends AppCompatActivity {
         binding.btnOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.mu);
-                mediaPlayer.start();
+
             }
         });
 
+        //Dummy character creation
+        user.makeCharacter(this, 0);
+        binding.ImgCharacter.setImageBitmap(user.getCharacter().getCharacterSprite());
     }
 }

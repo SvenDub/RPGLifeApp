@@ -41,9 +41,7 @@
                     android:layout_weight="1" />
 
                 <Button style="@style/DefaultButton"
-                    android:text="Button"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:text="Filter"
                     android:id="@+id/BtnFilter"
                     android:layout_weight="1" />
             </LinearLayout>

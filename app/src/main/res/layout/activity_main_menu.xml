@@ -22,10 +22,12 @@
             android:layout_weight="1">
 
             <ImageView
+                android:scaleType="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
-                app:srcCompat="@android:color/background_light"/>
+                app:srcCompat="@android:color/background_light"
+                android:id="@+id/ImgCharacter" />
 
             <ScrollView android:background="@drawable/main_menu_scroll"
                 android:layout_width="match_parent"

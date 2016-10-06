@@ -17,14 +17,26 @@
     <style name="DefaultButton" parent="Base.Widget.AppCompat.Button">
         <item name="android:background">@color/DefaultColor</item>
         <item name="android:layout_margin">1dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
     </style>
 
     <style name="BackButton" parent="Base.Widget.AppCompat.Button">
+        <item name="android:layout_weight">1</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">150dp</item>
         <item name="android:layout_margin">2dp</item>
         <item name="android:background">@color/BackButton</item>
         <item name="android:text">&lt;</item>
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
