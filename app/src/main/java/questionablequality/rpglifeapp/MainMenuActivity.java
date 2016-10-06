@@ -2,12 +2,15 @@ package questionablequality.rpglifeapp;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import questionablequality.rpglifeapp.data.*;
 
+import questionablequality.rpglifeapp.data.Character;
 import questionablequality.rpglifeapp.databinding.ActivityMainMenuBinding;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -22,7 +25,8 @@ public class MainMenuActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main_menu);
 
         //Data binding the data element "User"
-        binding.setUser((User)getIntent().getSerializableExtra("User"));
+        User user = (User)getIntent().getSerializableExtra("User");
+        binding.setUser(user);
 
 
         //Setting the Buttons OnClick events
@@ -48,9 +52,12 @@ public class MainMenuActivity extends AppCompatActivity {
         binding.btnOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.mu);
-                mediaPlayer.start();    }
+
+            }
         });
 
+        //Dummy character creation
+        user.makeCharacter(this, 0);
+        binding.ImgCharacter.setImageBitmap(user.getCharacter().getCharacterSprite());
     }
 }

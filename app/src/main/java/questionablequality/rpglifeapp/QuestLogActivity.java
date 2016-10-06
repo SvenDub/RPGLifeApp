@@ -23,7 +23,14 @@ public class QuestLogActivity extends AppCompatActivity {
                 finish();
             }
         });
+        binding.BtnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
+
+        //binds the adapter containing the quests.
         QuestProvider QP = new QuestProvider(this);
         QuestAdapter QA = new QuestAdapter(this, QP.ReturnQuests());
         binding.LstQuests.setAdapter(QA);
