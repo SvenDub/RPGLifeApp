@@ -2,15 +2,11 @@ package questionablequality.rpglifeapp;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import questionablequality.rpglifeapp.data.*;
 
-import questionablequality.rpglifeapp.data.Character;
 import questionablequality.rpglifeapp.databinding.ActivityMainMenuBinding;
 
 public class MainMenuActivity extends AppCompatActivity {

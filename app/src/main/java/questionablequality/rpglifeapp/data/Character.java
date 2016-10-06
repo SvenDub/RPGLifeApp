@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import java.util.*;
+
 import questionablequality.rpglifeapp.R;
 
 /**
@@ -13,10 +15,12 @@ import questionablequality.rpglifeapp.R;
 public class Character {
     private Bitmap bmp;
     private int charnumber;
+    private List<Quest> quests;
 
     public Character(Context c, int charnumber){
         this.bmp = BitmapFactory.decodeResource(c.getResources(), R.drawable.character_spritesheet);
         this.charnumber = charnumber;
+        quests = new ArrayList<Quest>();
     }
 
     /**

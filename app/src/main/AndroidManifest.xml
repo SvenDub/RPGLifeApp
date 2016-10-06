@@ -24,7 +24,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainMenuActivity" />
-        <activity android:name=".QuestLogActivity"></activity>
+        <activity android:name=".QuestLogActivity" />
+        <activity android:name=".AddQuestActivity"></activity>
     </application>
 
 </manifest>

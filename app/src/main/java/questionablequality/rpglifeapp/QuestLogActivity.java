@@ -1,5 +1,6 @@
 package questionablequality.rpglifeapp;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +28,13 @@ public class QuestLogActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+        binding.BtnAddQuest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(QuestLogActivity.this, AddQuestActivity.class);
+                startActivity(intent);
             }
         });
 
