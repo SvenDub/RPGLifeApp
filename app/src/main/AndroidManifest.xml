@@ -3,6 +3,7 @@
     package="questionablequality.rpglifeapp">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -25,7 +26,16 @@
         </activity>
         <activity android:name=".MainMenuActivity" />
         <activity android:name=".QuestLogActivity" />
-        <activity android:name=".AddQuestActivity"></activity>
+        <activity android:name=".AddQuestActivity" />
+
+
+        <service android:name=".auth.AuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data android:name="android.accounts.AccountAuthenticator"
+                       android:resource="@xml/authenticator" />
+        </service>
     </application>
 
 </manifest>
