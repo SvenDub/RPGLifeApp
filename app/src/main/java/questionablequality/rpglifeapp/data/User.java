@@ -3,17 +3,25 @@ package questionablequality.rpglifeapp.data;
 import android.content.Context;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Tobi on 29-Sep-16.
  */
 
 public class User implements Serializable {
-    public String username;
-    public Character character;
+    private String username;
+    private Character character;
+    private List<Quest> quests;
+    private Map attributes;
 
     public User(String username){
         this.username = username;
+        quests = new ArrayList<>();
+        attributes = new HashMap();
     }
 
     /**
@@ -32,5 +40,10 @@ public class User implements Serializable {
      */
     public Character getCharacter(){
         return character;
+    }
+
+    public boolean addQuest(Quest quest){
+        quests.add(quest);
+        return true;
     }
 }

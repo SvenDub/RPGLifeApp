@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RPGLifeApp</string>
+    <string name="app_name">Life Goals RPG</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
