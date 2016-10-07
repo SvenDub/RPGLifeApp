@@ -22,7 +22,7 @@
             android:layout_weight="1">
 
             <ImageView
-                android:scaleType="center"
+                android:scaleType="fitCenter"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="3"

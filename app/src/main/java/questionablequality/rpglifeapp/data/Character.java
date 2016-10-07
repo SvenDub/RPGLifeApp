@@ -4,13 +4,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import questionablequality.rpglifeapp.R;
-
-/**
- * Created by Tobi on 06-Oct-16.
- */
 
 public class Character {
     private Bitmap bmp;
@@ -18,7 +15,10 @@ public class Character {
     private List<Quest> quests;
 
     public Character(Context c, int charnumber){
-        this.bmp = BitmapFactory.decodeResource(c.getResources(), R.drawable.character_spritesheet);
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inScaled = false;
+
+        this.bmp = BitmapFactory.decodeResource(c.getResources(), R.drawable.character_spritesheet, opts);
         this.charnumber = charnumber;
         quests = new ArrayList<Quest>();
     }
@@ -28,6 +28,6 @@ public class Character {
      * @return a Bitmap representing the character.
      */
     public Bitmap getCharacterSprite(){
-        return Bitmap.createBitmap(bmp, 222*charnumber, 0, 222, 220);
+        return Bitmap.createBitmap(bmp, 113*charnumber, 0, 113, 110);
     }
 }
