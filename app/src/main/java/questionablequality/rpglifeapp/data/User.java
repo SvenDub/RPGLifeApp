@@ -42,8 +42,14 @@ public class User implements Serializable {
         return character;
     }
 
+    public String getUsername(){
+        return username;
+    }
+
     public boolean addQuest(Quest quest){
         quests.add(quest);
         return true;
     }
+
+
 }
