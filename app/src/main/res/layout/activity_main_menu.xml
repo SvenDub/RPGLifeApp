@@ -43,7 +43,7 @@
                         android:id="@+id/MainMenuTextStats"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="@{user.username.substring(0, user.username.indexOf('@'))}"
+                        android:text="@{user.info}"
                         />
                 </LinearLayout>
             </ScrollView>

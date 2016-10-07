@@ -15,13 +15,9 @@ import java.util.Map;
 public class User implements Serializable {
     private String username;
     private Character character;
-    private List<Quest> quests;
-    private Map attributes;
 
     public User(String username){
         this.username = username;
-        quests = new ArrayList<>();
-        attributes = new HashMap();
     }
 
     /**
@@ -42,14 +38,23 @@ public class User implements Serializable {
         return character;
     }
 
+    /**
+     * returns the username.
+     * @return the username.
+     */
     public String getUsername(){
         return username;
     }
 
-    public boolean addQuest(Quest quest){
-        quests.add(quest);
-        return true;
+    public String getInfo(){
+        return username.substring(0, username.indexOf('@'))
+                + "\n"
+                + character.getAttributeString("Dicksize")
+                + "\n"
+                + character.getAttributeString("Strength")
+                + "\n"
+                + character.getAttributeString("Dexterity")
+                + "\n"
+                + character.getAttributeString("Charisma");
     }
-
-
 }
