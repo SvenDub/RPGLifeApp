@@ -5,7 +5,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import questionablequality.rpglifeapp.R;
 
@@ -21,8 +24,8 @@ public class Character {
 
         this.bmp = BitmapFactory.decodeResource(c.getResources(), R.drawable.character_spritesheet, opts);
         this.charnumber = charnumber;
-        quests = new ArrayList<Quest>();
-        attributes = new HashMap();
+        quests = new ArrayList<>();
+        attributes = new HashMap<>();
         generateAttributes(c);
     }
 
