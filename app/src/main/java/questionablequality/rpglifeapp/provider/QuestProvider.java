@@ -4,8 +4,9 @@ import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
-import questionablequality.rpglifeapp.R;
+import questionablequality.rpglifeapp.ApiController;
 import questionablequality.rpglifeapp.data.Quest;
 
 /**
@@ -15,9 +16,11 @@ import questionablequality.rpglifeapp.data.Quest;
 public class QuestProvider {
 
     private Context context;
+    private ApiController mApiController;
 
     public QuestProvider(Context context){
         this.context = context;
+        mApiController = new ApiController(context);
     }
 
     /**
@@ -25,12 +28,11 @@ public class QuestProvider {
      * @return an array of quests.
      */
     public List<Quest> ReturnQuests(){
-        ArrayList<Quest> quests;
-        quests = new ArrayList<>();
-        for(String S : context.getResources().getStringArray(R.array.Quest)){
-            quests.add(new Quest(S));
+        try {
+            return mApiController.getQuests().get().getResult();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
         }
-
-        return quests;
     }
 }

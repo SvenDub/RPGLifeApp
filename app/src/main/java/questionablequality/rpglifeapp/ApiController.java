@@ -10,15 +10,18 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.Future;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.Response;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import questionablequality.rpglifeapp.data.User;
 import questionablequality.rpglifeapp.auth.AccountAuthenticator;
+import questionablequality.rpglifeapp.data.Quest;
+import questionablequality.rpglifeapp.data.User;
 
 public class ApiController {
 
@@ -68,6 +71,28 @@ public class ApiController {
                         callback.onCompleted(e, result);
                     }
                 });
+    }
+
+    /**
+     * Get the user's quests.
+     *
+     * @param callback The callback that will receive the result.
+     */
+    public void getQuests(final FutureCallback<Response<List<Quest>>> callback) {
+        getQuests()
+                .setCallback(callback);
+    }
+
+    /**
+     * Get the users quests.
+     * @return The Future that will receive the result.
+     */
+    public Future<Response<List<Quest>>> getQuests() {
+        return Ion.with(mContext)
+                .load(API_URL + "/quest")
+                .addHeader("Authorization", mAccountManager.getPassword(mAccount))
+                .as(new TypeToken<List<Quest>>(){})
+                .withResponse();
     }
 
     /**
