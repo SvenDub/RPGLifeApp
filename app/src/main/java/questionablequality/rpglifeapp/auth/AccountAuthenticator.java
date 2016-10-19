@@ -9,6 +9,8 @@ import android.os.Bundle;
 
 public class AccountAuthenticator extends AbstractAccountAuthenticator {
 
+    public static final String ACCOUNT_TYPE = "questionablequality.rpglifeapp";
+
     public AccountAuthenticator(Context context) {
         super(context);
     }

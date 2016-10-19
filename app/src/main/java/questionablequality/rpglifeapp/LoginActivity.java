@@ -31,14 +31,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.gson.JsonObject;
-import com.koushikdutta.ion.Ion;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
-import questionablequality.rpglifeapp.data.User;
+import questionablequality.rpglifeapp.auth.AccountAuthenticator;
 import questionablequality.rpglifeapp.databinding.ActivityLoginBinding;
 
 /**
@@ -59,6 +55,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private UserLoginTask mAuthTask = null;
 
     private AccountManager mAccountManager;
+    private ApiController mApiController;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -71,6 +68,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
 
         mAccountManager = AccountManager.get(this);
+        mApiController = new ApiController(this);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS) == PackageManager.PERMISSION_GRANTED) {
             Account[] accounts = mAccountManager.getAccountsByType("questionablequality.rpglifeapp");
@@ -286,26 +284,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            JsonObject request = new JsonObject();
-            request.addProperty("username", mEmail);
-            request.addProperty("password", mPassword);
-
-            try {
-                JsonObject response = Ion.with(LoginActivity.this)
-                        .load("http://svendubbeld.nl:12345/login")
-                        .setJsonObjectBody(request)
-                        .asJsonObject()
-                        .get();
-
-                if (response != null && response.has("accessToken")) {
-                    mAccessToken = response.get("accessToken").getAsString();
-                    return true;
-                } else {
-                    return false;
-                }
-            } catch (InterruptedException | ExecutionException e) {
-                return false;
-            }
+            mAccessToken = mApiController.login(mEmail, mPassword);
+            return !mAccessToken.isEmpty();
         }
 
         @Override
@@ -314,12 +294,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                final Account account = new Account(mEmail, "questionablequality.rpglifeapp");
+                final Account account = new Account(mEmail, AccountAuthenticator.ACCOUNT_TYPE);
                 mAccountManager.addAccountExplicitly(account, mAccessToken, null);
 
                 finish();
                 Intent i = new Intent(LoginActivity.this, MainMenuActivity.class);
-                i.putExtra("User", new User(mEmail));
                 startActivity(i);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
