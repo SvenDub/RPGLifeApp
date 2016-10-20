@@ -40,6 +40,10 @@ public class ApiController {
 
         mAccountManager = AccountManager.get(mContext);
 
+        isLoggedIn();
+    }
+
+    public boolean isLoggedIn() {
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
             throw new RuntimeException("Missing permissions"); // TODO Handle gracefully
         }
@@ -47,11 +51,10 @@ public class ApiController {
 
         if (accounts.length > 0) {
             mAccount = accounts[0];
-        } else {
-            throw new RuntimeException("Not logged in"); // TODO Handle gracefully
+            Log.d("ACCESS TOKEN", mAccountManager.getPassword(mAccount));
         }
 
-        Log.d("ACCESS TOKEN", mAccountManager.getPassword(mAccount));
+        return mAccount != null;
     }
 
     /**
@@ -85,14 +88,30 @@ public class ApiController {
 
     /**
      * Get the users quests.
+     *
      * @return The Future that will receive the result.
      */
     public Future<Response<List<Quest>>> getQuests() {
         return Ion.with(mContext)
                 .load(API_URL + "/quest")
                 .addHeader("Authorization", mAccountManager.getPassword(mAccount))
-                .as(new TypeToken<List<Quest>>(){})
+                .as(new TypeToken<List<Quest>>() {
+                })
                 .withResponse();
+    }
+
+    public void addQuest(Quest quest, final FutureCallback<Response<Quest>> callback) {
+        addQuest(quest).setCallback(callback);
+    }
+
+    /**
+     * Add a new quest.
+     *
+     * @param quest The new quest.
+     * @return The Fututre that will receive the saved quest.
+     */
+    public Future<Response<Quest>> addQuest(Quest quest) {
+        return postObject("/quest", quest, Quest.class);
     }
 
     /**
@@ -108,7 +127,11 @@ public class ApiController {
         request.addProperty("password", password);
 
         try {
-            Response<JsonObject> result = postJsonObject("/login", request, JsonObject.class).get();
+            Response<JsonObject> result = Ion.with(mContext)
+                    .load(API_URL + "/login")
+                    .setJsonObjectBody(request)
+                    .asJsonObject()
+                    .withResponse().get();
 
             if (result.getException() == null && result.getResult() != null) {
                 return result.getResult().get("accessToken").getAsString();

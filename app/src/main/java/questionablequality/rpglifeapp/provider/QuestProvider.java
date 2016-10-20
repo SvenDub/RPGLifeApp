@@ -2,6 +2,8 @@ package questionablequality.rpglifeapp.provider;
 
 import android.content.Context;
 
+import com.koushikdutta.ion.Response;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -29,10 +31,24 @@ public class QuestProvider {
      */
     public List<Quest> ReturnQuests(){
         try {
-            return mApiController.getQuests().get().getResult();
+            Response<List<Quest>> listResponse = mApiController.getQuests().get();
+            if (listResponse.getResult() != null && listResponse.getException() == null) {
+                return listResponse.getResult();
+            } else {
+                return new ArrayList<>();
+            }
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
             return new ArrayList<>();
+        }
+    }
+
+    public boolean addQuest(Quest quest) {
+        try {
+            return mApiController.addQuest(quest).get().getResult() != null;
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

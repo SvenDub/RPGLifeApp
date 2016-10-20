@@ -6,13 +6,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import java.util.List;
+
 import questionablequality.rpglifeapp.adapter.QuestAdapter;
+import questionablequality.rpglifeapp.data.Quest;
 import questionablequality.rpglifeapp.databinding.ActivityQuestLogBinding;
 import questionablequality.rpglifeapp.provider.QuestProvider;
 
 public class QuestLogActivity extends AppCompatActivity {
 
-    ActivityQuestLogBinding binding;
+    private ActivityQuestLogBinding binding;
+
+    private QuestProvider mQuestProvider;
+    private QuestAdapter mQuestAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +46,17 @@ public class QuestLogActivity extends AppCompatActivity {
         });
 
         //binds the adapter containing the quests.
-        QuestProvider QP = new QuestProvider(this);
-        QuestAdapter QA = new QuestAdapter(this, QP.ReturnQuests());
-        binding.LstQuests.setAdapter(QA);
+        mQuestProvider = new QuestProvider(this);
+        mQuestAdapter = new QuestAdapter(this, mQuestProvider.ReturnQuests());
+        binding.LstQuests.setAdapter(mQuestAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        List<Quest> quests = mQuestProvider.ReturnQuests();
+        mQuestAdapter.clear();
+        mQuestAdapter.addAll(quests);
     }
 }
