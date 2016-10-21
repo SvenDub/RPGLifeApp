@@ -5,21 +5,14 @@ package questionablequality.rpglifeapp.data;
  */
 
 public class Quest {
+    private int id;
+
     private String name;
     private String description;
     private int goal;
 
     private int progress;
     private int rewardxp;
-
-
-    /**
-     * Deprecated
-     * @param description deprecated
-     */
-    public Quest(String description) {
-        this.description = description;
-    }
 
     public Quest(String name, String description, int goal) {
         this.name = name;
@@ -28,6 +21,10 @@ public class Quest {
 
         this.progress = 0;
         this.rewardxp = this.goal*10;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {

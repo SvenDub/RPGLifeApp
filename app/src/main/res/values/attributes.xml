@@ -4,6 +4,7 @@
         <item>Strength</item>
         <item>Dexterity</item>
         <item>Charisma</item>
-        <item>Dicksize</item>
+        <item>Experience</item>
+        <item>Gold</item>
     </string-array>
 </resources>

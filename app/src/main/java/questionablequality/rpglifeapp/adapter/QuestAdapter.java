@@ -10,7 +10,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
+import questionablequality.rpglifeapp.ApiController;
 import questionablequality.rpglifeapp.R;
 import questionablequality.rpglifeapp.data.Quest;
 import questionablequality.rpglifeapp.provider.QuestProvider;
@@ -20,6 +22,8 @@ import questionablequality.rpglifeapp.provider.QuestProvider;
  */
 
 public class QuestAdapter extends ArrayAdapter<Quest> {
+    private ApiController api;
+
     private Context context;
     private List<Quest> quests;
 
@@ -28,6 +32,7 @@ public class QuestAdapter extends ArrayAdapter<Quest> {
         super(context, R.layout.quest_list_item, quests);
         this.context = context;
         this.quests = quests;
+        this.api = new ApiController(this.context);
     }
 
     @Override
@@ -43,15 +48,22 @@ public class QuestAdapter extends ArrayAdapter<Quest> {
 
         TextView tv = (TextView)view.findViewById(R.id.textView);
         tv.setText(requestedQuest.getName());
-        ProgressBar pb = (ProgressBar)view.findViewById(R.id.PbProgress);
+        final ProgressBar pb = (ProgressBar)view.findViewById(R.id.PbProgress);
         pb.setMax(requestedQuest.getGoal());
         pb.setProgress(requestedQuest.getProgress());
 
         Button btn = (Button)view.findViewById(R.id.BtnIncreaseButton);
+        final View finalView = view;
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 requestedQuest.Increase();
+                try {
+                    api.saveQuest(requestedQuest).get();
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+                pb.setProgress(requestedQuest.getProgress());
             }
         });
 

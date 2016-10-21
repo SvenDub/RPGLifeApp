@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -57,6 +58,10 @@ public class Character {
 
     public String getAttributeString(String attributename){
         return attributename + ": " + attributes.get(attributename);
+    }
+
+    public Iterator getAttributes(){
+        return attributes.keySet().iterator();
     }
 
     private void generateAttributes(Context c){

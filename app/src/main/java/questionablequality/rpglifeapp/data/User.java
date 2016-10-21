@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -50,8 +51,9 @@ public class User implements Serializable {
     public String getInfo(){
         String returnstring = username.substring(0, username.indexOf('@'));
 
-        for(String s : Arrays.asList("Strength", "Dexterity", "Charisma")){
-            returnstring += "\n" + character.getAttributeString(s);
+        Iterator it = character.getAttributes();
+        while(it.hasNext()){
+            returnstring += "\n" + character.getAttributeString(it.next().toString());
         }
         return returnstring;
     }

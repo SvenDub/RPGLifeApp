@@ -108,10 +108,22 @@ public class ApiController {
      * Add a new quest.
      *
      * @param quest The new quest.
-     * @return The Fututre that will receive the saved quest.
+     * @return The Future that will receive the saved quest.
      */
     public Future<Response<Quest>> addQuest(Quest quest) {
         return postObject("/quest", quest, Quest.class);
+    }
+
+    public void saveQuest(Quest quest, final FutureCallback<Response<Quest>> callback){
+        saveQuest(quest).setCallback(callback);
+    }
+
+
+    /**
+     *Saves the quest.
+     */
+    public Future<Response<Quest>> saveQuest(Quest quest){
+        return postObject("/quest/" + quest.getId(), quest, Quest.class);
     }
 
     /**
