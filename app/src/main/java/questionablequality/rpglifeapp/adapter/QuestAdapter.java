@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
@@ -30,7 +32,7 @@ public class QuestAdapter extends ArrayAdapter<Quest> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Quest requestedQuest = quests.get(position);
+        final Quest requestedQuest = quests.get(position);
 
         View view = convertView;
 
@@ -40,7 +42,18 @@ public class QuestAdapter extends ArrayAdapter<Quest> {
         }
 
         TextView tv = (TextView)view.findViewById(R.id.textView);
-        tv.setText(requestedQuest.description);
+        tv.setText(requestedQuest.getName());
+        ProgressBar pb = (ProgressBar)view.findViewById(R.id.PbProgress);
+        pb.setMax(requestedQuest.getGoal());
+        pb.setProgress(requestedQuest.getProgress());
+
+        Button btn = (Button)view.findViewById(R.id.BtnIncreaseButton);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestedQuest.Increase();
+            }
+        });
 
         return view;
     }

@@ -27,7 +27,7 @@ public class AddQuestActivity extends AppCompatActivity {
         binding.AddQuestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Quest quest = new Quest(binding.TxtQuestDescription.getText().toString());
+                Quest quest = new Quest(binding.TxtQuestName.getText().toString(), binding.TxtQuestDescription.getText().toString(), Integer.parseInt(binding.TxtSetGoalAmount.getText().toString()));
                 if (mQuestProvider.addQuest(quest)) {
                     finish();
                 } else {

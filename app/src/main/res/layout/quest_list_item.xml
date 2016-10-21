@@ -9,4 +9,18 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView"
         android:layout_weight="1" />
+
+    <ProgressBar
+        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/PbProgress"
+        android:layout_weight="5" />
+
+    <Button
+        android:text="+"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/BtnIncreaseButton"
+        android:layout_weight=".1" />
 </LinearLayout>

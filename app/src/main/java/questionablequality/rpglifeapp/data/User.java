@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,14 +48,11 @@ public class User implements Serializable {
     }
 
     public String getInfo(){
-        return username.substring(0, username.indexOf('@'))
-                + "\n"
-                + character.getAttributeString("Dicksize")
-                + "\n"
-                + character.getAttributeString("Strength")
-                + "\n"
-                + character.getAttributeString("Dexterity")
-                + "\n"
-                + character.getAttributeString("Charisma");
+        String returnstring = username.substring(0, username.indexOf('@'));
+
+        for(String s : Arrays.asList("Strength", "Dexterity", "Charisma")){
+            returnstring += "\n" + character.getAttributeString(s);
+        }
+        return returnstring;
     }
 }

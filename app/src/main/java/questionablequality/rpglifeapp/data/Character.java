@@ -43,8 +43,7 @@ public class Character {
      * @return confirmation boolean.
      */
     public boolean addQuest(Quest quest){
-        quests.add(quest);
-        return true;
+        return quests.add(quest);
     }
 
     /**
