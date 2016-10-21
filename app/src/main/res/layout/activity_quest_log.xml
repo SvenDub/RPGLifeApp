@@ -41,7 +41,7 @@
                     android:layout_weight="1" />
 
                 <Button style="@style/DefaultButton"
-                    android:text="Filter"
+                    android:text="@string/action_filter"
                     android:id="@+id/BtnFilter"
                     android:layout_weight="1" />
             </LinearLayout>

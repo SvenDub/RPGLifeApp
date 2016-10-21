@@ -1,10 +1,13 @@
 package questionablequality.rpglifeapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
 
 import java.util.List;
 
@@ -49,6 +52,36 @@ public class QuestLogActivity extends AppCompatActivity {
         mQuestProvider = new QuestProvider(this);
         mQuestAdapter = new QuestAdapter(this, mQuestProvider.ReturnQuests());
         binding.LstQuests.setAdapter(mQuestAdapter);
+
+        binding.BtnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final EditText editText = new EditText(QuestLogActivity.this);
+                new AlertDialog.Builder(QuestLogActivity.this)
+                        .setTitle(R.string.filter)
+                        .setView(editText)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String text = editText.getText().toString();
+                                mQuestAdapter.getFilter().filter(text);
+
+                                if (!text.isEmpty()) {
+                                    binding.BtnFilter.setText(getString(R.string.action_filter) + " (" + text + ")");
+                                } else {
+                                    binding.BtnFilter.setText(getString(R.string.action_filter));
+                                }
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        })
+                        .show();
+            }
+        });
     }
 
     @Override
