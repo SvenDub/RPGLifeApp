@@ -3,12 +3,7 @@ package questionablequality.rpglifeapp.data;
 import android.content.Context;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Tobi on 29-Sep-16.
@@ -49,11 +44,11 @@ public class User implements Serializable {
     }
 
     public String getInfo(){
-        String returnstring = username.substring(0, username.indexOf('@'));
+        String returnstring = "";
 
         Iterator it = character.getAttributes();
         while(it.hasNext()){
-            returnstring += "\n" + character.getAttributeString(it.next().toString());
+            returnstring += character.getAttributeString(it.next().toString()) + "\n";
         }
         return returnstring;
     }

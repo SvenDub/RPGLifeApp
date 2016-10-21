@@ -68,6 +68,7 @@ public class MainMenuActivity extends AppCompatActivity {
             if (e == null && result.getException() == null && result.getResult() != null) {
                 mUser = result.getResult();
                 binding.setUser(mUser);
+                getSupportActionBar().setSubtitle(mUser.getUsername());
 
                 //Dummy character creation
                 mUser.makeCharacter(MainMenuActivity.this, 0);
