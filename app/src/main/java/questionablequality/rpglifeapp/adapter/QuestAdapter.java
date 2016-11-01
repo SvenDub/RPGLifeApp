@@ -1,6 +1,7 @@
 package questionablequality.rpglifeapp.adapter;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.Filter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +53,7 @@ public class QuestAdapter extends ArrayAdapter<Quest> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, final ViewGroup parent) {
         final Quest requestedQuest = getItem(position);
 
         View view = convertView;
@@ -72,7 +74,16 @@ public class QuestAdapter extends ArrayAdapter<Quest> {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MediaPlayer mp1 = MediaPlayer.create(parent.getContext(), R.raw.coinsone);
+                MediaPlayer mp2 = MediaPlayer.create(parent.getContext(), R.raw.coinsmany);
+
                 requestedQuest.Increase();
+                if(requestedQuest.getProgress() == requestedQuest.getGoal()){
+                    mp2.start();
+                    Toast.makeText(parent.getContext(), "Good Job!", Toast.LENGTH_LONG);
+                }else{
+                    mp1.start();
+                }
                 try {
                     api.saveQuest(requestedQuest).get();
                 } catch (InterruptedException | ExecutionException e) {

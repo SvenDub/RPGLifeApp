@@ -67,6 +67,14 @@
                 android:inputType="number"
                 android:ems="10"
                 android:id="@+id/TxtSetGoalAmount" />
+
+            <CheckBox
+                android:text="Set this location as goal?"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/chkBxGPS"
+                android:layout_weight="1" />
+
         </TableRow>
     </TableLayout>
 

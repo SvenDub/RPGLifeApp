@@ -14,6 +14,7 @@ public class AddQuestActivity extends AppCompatActivity {
 
     ActivityAddQuestBinding binding;
 
+
     private QuestProvider mQuestProvider;
 
     @Override
@@ -24,10 +25,18 @@ public class AddQuestActivity extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_quest);
 
+
+
         binding.AddQuestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Quest quest = new Quest(binding.TxtQuestName.getText().toString(), binding.TxtQuestDescription.getText().toString(), Integer.parseInt(binding.TxtSetGoalAmount.getText().toString()));
+                Quest quest = null;
+                if(binding.chkBxGPS.isChecked()){
+                    quest = new Quest(binding.TxtQuestName.getText().toString(), binding.TxtQuestDescription.getText().toString(), Integer.parseInt(binding.TxtSetGoalAmount.getText().toString() /**TODO: add location get**/ ));
+                }else{
+                    quest = new Quest(binding.TxtQuestName.getText().toString(), binding.TxtQuestDescription.getText().toString(), Integer.parseInt(binding.TxtSetGoalAmount.getText().toString()));
+                }
+
                 if (mQuestProvider.addQuest(quest)) {
                     finish();
                 } else {

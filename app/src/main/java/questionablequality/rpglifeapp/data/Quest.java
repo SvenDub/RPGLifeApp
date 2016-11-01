@@ -1,5 +1,7 @@
 package questionablequality.rpglifeapp.data;
 
+import android.location.Location;
+
 /**
  * Created by Tobi on 30-Sep-16.
  */
@@ -14,6 +16,8 @@ public class Quest {
     private int progress;
     private int rewardxp;
 
+    private Location loc;
+
     public Quest(String name, String description, int goal) {
         this.name = name;
         this.description = description;
@@ -21,6 +25,17 @@ public class Quest {
 
         this.progress = 0;
         this.rewardxp = this.goal*10;
+    }
+
+    public Quest(String name, String description, int goal, Location loc) {
+        this.name = name;
+        this.description = description;
+        this.goal = goal;
+
+        this.progress = 0;
+        this.rewardxp = this.goal*10;
+
+        this.loc = loc;
     }
 
     public int getId() {

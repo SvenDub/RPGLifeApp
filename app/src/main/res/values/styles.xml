@@ -9,6 +9,8 @@
     </style>
 
     <style name="MainMenuButton" parent="Base.Widget.AppCompat.Button">
+        <item name="android:textColor">#80101010</item>
+        <item name="android:textSize">32dp</item>
         <item name="android:background">@drawable/main_menu_button</item>
         <item name="android:layout_margin">1dp</item>
         <item name="android:layout_weight">1</item>
