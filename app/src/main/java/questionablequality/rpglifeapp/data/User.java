@@ -13,6 +13,8 @@ public class User implements Serializable {
     private String username;
     private Character character;
 
+    private Guild guild;
+
     public User(String username){
         this.username = username;
     }
@@ -51,5 +53,17 @@ public class User implements Serializable {
             returnstring += character.getAttributeString(it.next().toString()) + "\n";
         }
         return returnstring;
+    }
+
+    public boolean hasGuild(){
+        return (guild != null);
+    }
+
+    public Guild getGuild() {
+        return guild;
+    }
+
+    public void setGuild(Guild guild) {
+        this.guild = guild;
     }
 }

@@ -1,0 +1,50 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="questionablequality.rpglifeapp.fragment.JoinGuildFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical|center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enter guild code:"
+                android:layout_gravity="center"
+                android:gravity="bottom" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/TxtSetGuildCode"
+                android:gravity="top|center"
+                android:hint="000000"
+                android:digits="0123456789"
+                android:textSize="18sp"
+                android:lines="1"
+                android:maxLength="6"
+                android:layout_gravity="center" />
+        </LinearLayout>
+
+        <Button
+            android:text="Join"
+            android:layout_height="wrap_content"
+            android:id="@+id/BtnFindGuild"
+            android:layout_gravity="top|center_horizontal"
+            style="@style/DefaultButton"
+            android:layout_weight=".05" />
+    </LinearLayout>
+
+</FrameLayout>

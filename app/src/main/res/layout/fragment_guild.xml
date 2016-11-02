@@ -1,0 +1,79 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="questionablequality.rpglifeapp.fragment.GuildFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3">
+
+            <TextView
+                android:text="Guildleader: "
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/TxtGuilLeader"
+                android:textSize="24sp" />
+
+            <TextView
+                android:text="Guildcode:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/TxtCode" />
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/LstMembers" />
+        </LinearLayout>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/LstQuests">
+        </ListView>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:layout_weight="3">
+
+            <Button style="@style/DefaultButton"
+                android:text="Add Quest"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/BtnAddGuildQuest"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                android:layout_weight="1">
+
+                <Button style="@style/BackButton"
+                    android:id="@+id/BtnGuildBack"
+                    android:layout_weight="1" />
+
+                <Button style="@style/DefaultButton"
+                    android:text="@string/action_filter"
+                    android:id="@+id/BtnGuildFilter"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

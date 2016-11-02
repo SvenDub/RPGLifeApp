@@ -42,6 +42,11 @@ public class QuestProvider {
             return new ArrayList<>();
         }
     }
+    public List<Quest> ReturnGuildQuests(){
+        //TODO
+
+        return new ArrayList<>();
+    }
 
     public boolean addQuest(Quest quest) {
         try {
@@ -50,5 +55,10 @@ public class QuestProvider {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public boolean addGuildQuest(Quest quest) {
+        //TODO
+        return false;
     }
 }
