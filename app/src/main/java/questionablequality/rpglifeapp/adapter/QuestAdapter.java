@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Filter;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,6 +66,10 @@ public class QuestAdapter extends ArrayAdapter<Quest> {
 
         TextView tv = (TextView)view.findViewById(R.id.textView);
         tv.setText(requestedQuest.getName());
+
+        ImageView imgLocation = (ImageView) view.findViewById(R.id.img_location);
+        imgLocation.setVisibility(requestedQuest.getPlace() == null ? View.GONE : View.VISIBLE);
+
         final ProgressBar pb = (ProgressBar)view.findViewById(R.id.PbProgress);
         pb.setMax(requestedQuest.getGoal());
         pb.setProgress(requestedQuest.getProgress());
@@ -77,10 +82,10 @@ public class QuestAdapter extends ArrayAdapter<Quest> {
                 MediaPlayer mp1 = MediaPlayer.create(parent.getContext(), R.raw.coinsone);
                 MediaPlayer mp2 = MediaPlayer.create(parent.getContext(), R.raw.coinsmany);
 
-                requestedQuest.Increase();
+                requestedQuest.increase();
                 if(requestedQuest.getProgress() == requestedQuest.getGoal()){
                     mp2.start();
-                    Toast.makeText(parent.getContext(), "Good Job!", Toast.LENGTH_LONG);
+                    Toast.makeText(parent.getContext(), "Good Job!", Toast.LENGTH_LONG).show();
                 }else{
                     mp1.start();
                 }
