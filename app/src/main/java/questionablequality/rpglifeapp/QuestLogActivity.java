@@ -44,6 +44,7 @@ public class QuestLogActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(QuestLogActivity.this, AddQuestActivity.class);
+                intent.putExtra("isGuild", false);
                 startActivity(intent);
             }
         });

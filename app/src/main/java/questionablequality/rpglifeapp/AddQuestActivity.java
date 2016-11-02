@@ -17,9 +17,13 @@ public class AddQuestActivity extends AppCompatActivity {
 
     private QuestProvider mQuestProvider;
 
+    private boolean isGuildQuest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        isGuildQuest = getIntent().getBooleanExtra("isGuild", false);
 
         mQuestProvider = new QuestProvider(this);
 
@@ -37,11 +41,21 @@ public class AddQuestActivity extends AppCompatActivity {
                     quest = new Quest(binding.TxtQuestName.getText().toString(), binding.TxtQuestDescription.getText().toString(), Integer.parseInt(binding.TxtSetGoalAmount.getText().toString()));
                 }
 
-                if (mQuestProvider.addQuest(quest)) {
-                    finish();
-                } else {
-                    Snackbar.make(binding.activityAddQuest, R.string.error_add_quest, Snackbar.LENGTH_SHORT).show();
+                if(isGuildQuest){
+                    if (mQuestProvider.addGuildQuest(quest)) {
+                        finish();
+                    } else {
+                        Snackbar.make(binding.activityAddQuest, R.string.error_add_quest, Snackbar.LENGTH_SHORT).show();
+                    }
+                }else{
+                    if (mQuestProvider.addQuest(quest)) {
+                        finish();
+                    } else {
+                        Snackbar.make(binding.activityAddQuest, R.string.error_add_quest, Snackbar.LENGTH_SHORT).show();
+                    }
                 }
+
+
 
             }
         });

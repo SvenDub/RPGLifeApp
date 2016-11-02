@@ -1,8 +1,6 @@
 package questionablequality.rpglifeapp;
 
 
-import android.content.Intent;
-import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.databinding.DataBindingUtil;
@@ -13,15 +11,10 @@ import android.os.Bundle;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Response;
 
-import questionablequality.rpglifeapp.adapter.GuildAdapter;
-import questionablequality.rpglifeapp.adapter.QuestAdapter;
 import questionablequality.rpglifeapp.data.User;
 import questionablequality.rpglifeapp.databinding.ActivityGuildBinding;
 import questionablequality.rpglifeapp.fragment.GuildFragment;
 import questionablequality.rpglifeapp.fragment.JoinGuildFragment;
-import questionablequality.rpglifeapp.provider.GuildMemberProvider;
-import questionablequality.rpglifeapp.provider.GuildQuestProvider;
-import questionablequality.rpglifeapp.provider.QuestProvider;
 
 public class GuildActivity extends AppCompatActivity implements GuildFragment.OnFragmentInteractionListener, JoinGuildFragment.OnFragmentInteractionListener{
 

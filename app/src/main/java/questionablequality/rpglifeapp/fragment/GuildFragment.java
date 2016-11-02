@@ -2,30 +2,24 @@ package questionablequality.rpglifeapp.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
 
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Response;
 
 import questionablequality.rpglifeapp.AddQuestActivity;
 import questionablequality.rpglifeapp.ApiController;
-import questionablequality.rpglifeapp.GuildActivity;
-import questionablequality.rpglifeapp.LoginActivity;
-import questionablequality.rpglifeapp.MainMenuActivity;
-import questionablequality.rpglifeapp.QuestLogActivity;
 import questionablequality.rpglifeapp.R;
 import questionablequality.rpglifeapp.adapter.GuildAdapter;
 import questionablequality.rpglifeapp.adapter.QuestAdapter;
 import questionablequality.rpglifeapp.data.User;
 import questionablequality.rpglifeapp.provider.GuildMemberProvider;
-import questionablequality.rpglifeapp.provider.GuildQuestProvider;
+import questionablequality.rpglifeapp.provider.QuestProvider;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,7 +37,7 @@ public class GuildFragment extends Fragment {
     private User mUser;
     private ApiController mApiController;
 
-    private GuildQuestProvider mGuildQuestProvider;
+    private QuestProvider mGuildQuestProvider;
     private QuestAdapter mQuestAdapter;
 
     private GuildMemberProvider mGuildMemberProvider;
@@ -82,8 +76,8 @@ public class GuildFragment extends Fragment {
 
         /**
         //binds the adapter containing the quests.
-        mGuildQuestProvider = new GuildQuestProvider(view.getContext());
-        mQuestAdapter = new QuestAdapter(view.getContext(), mGuildQuestProvider.ReturnQuests());
+        mGuildQuestProvider = new QuestProvider(view.getContext());
+        mQuestAdapter = new QuestAdapter(view.getContext(), mGuildQuestProvider.ReturnGuildQuests());
         ListView quests = (ListView)view.findViewById(R.id.LstQuests);
         quests.setAdapter(mQuestAdapter);
 
@@ -144,6 +138,7 @@ public class GuildFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(getActivity(), AddQuestActivity.class);
+                            intent.putExtra("isGuild", true);
                             startActivity(intent);
                         }
                     });
