@@ -9,6 +9,7 @@ import java.util.Random;
 
 public class Guild {
     private String name;
+    private User guildLeader;
     private List<User> members;
 
     private List<Quest> quests;
@@ -37,6 +38,22 @@ public class Guild {
         return c;
     }
 
+    public User getGuildLeader(){
+        return guildLeader;
+    }
+
+    public void setGuildLeader(User guildLeader){
+        this.guildLeader = guildLeader;
+    }
+
+    public String getGuildLeaderString(){
+        return (guildLeader != null) ? "Guildleader: " + guildLeader.getUsername() : "No guildleader.";
+    }
+
+    public String getCodeString(){
+        return "Code: " + code;
+    }
+
     public String getName() {
         return name;
     }
@@ -51,5 +68,9 @@ public class Guild {
 
     public List<Quest> getQuests() {
         return quests;
+    }
+
+    public boolean hasGuildLeader(){
+        return (guildLeader != null);
     }
 }
