@@ -10,14 +10,12 @@ import java.util.Iterator;
  */
 
 public class User implements Serializable {
+
+    private int id;
     private String username;
     private Character character;
 
     private Guild guild;
-
-    public User(String username){
-        this.username = username;
-    }
 
     /**
      * Creates a character and returns it.
@@ -65,5 +63,9 @@ public class User implements Serializable {
 
     public void setGuild(Guild guild) {
         this.guild = guild;
+    }
+
+    public int getId() {
+        return id;
     }
 }

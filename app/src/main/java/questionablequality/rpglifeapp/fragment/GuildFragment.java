@@ -135,7 +135,7 @@ public class GuildFragment extends Fragment {
                 addquest.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mUser.getGuild().setGuildLeader(mUser);
+                        mUser.getGuild().setGuildLeader(mUser.getId());
                         //TODO: save guild
                     }
                 });
