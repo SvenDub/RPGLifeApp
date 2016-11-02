@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import questionablequality.rpglifeapp.auth.AccountAuthenticator;
+import questionablequality.rpglifeapp.data.Guild;
 import questionablequality.rpglifeapp.data.Quest;
 import questionablequality.rpglifeapp.data.User;
 
@@ -124,6 +125,77 @@ public class ApiController {
     public Future<Response<Quest>> saveQuest(Quest quest){
         return postObject("/quest/" + quest.getId(), quest, Quest.class);
     }
+
+    /**
+     * Get the user's quests.
+     *
+     * @param callback The callback that will receive the result.
+     */
+    public void getGuildQuests(final FutureCallback<Response<List<Quest>>> callback) {
+        getQuests()
+                .setCallback(callback);
+    }
+
+    /**
+     * Get the guilds quests.
+     *
+     * @return The Future that will receive the result.
+     */
+    public Future<Response<List<Quest>>> getGuildQuests() {
+        return Ion.with(mContext)
+                .load(API_URL + "/guildquest")
+                .addHeader("Authorization", mAccountManager.getPassword(mAccount))
+                .as(new TypeToken<List<Quest>>() {
+                })
+                .withResponse();
+    }
+
+    public void addGuildQuest(Quest quest, final FutureCallback<Response<Quest>> callback) {
+        addQuest(quest).setCallback(callback);
+    }
+
+    /**
+     * Add a new quest.
+     *
+     * @param quest The new quest.
+     * @return The Future that will receive the saved quest.
+     */
+    public Future<Response<Quest>> addGuildQuest(Quest quest) {
+        return postObject("/guildquest", quest, Quest.class);
+    }
+
+    public void saveGuildQuest(Quest quest, final FutureCallback<Response<Quest>> callback){
+        saveQuest(quest).setCallback(callback);
+    }
+
+
+    /**
+     *Saves the quest.
+     */
+    public Future<Response<Quest>> saveGuildQuest(Quest quest){
+        return postObject("/guildquest/" + quest.getId(), quest, Quest.class);
+    }
+
+    public void getGuilds(final FutureCallback<Response<List<Guild>>> callback) {
+        getGuilds()
+                .setCallback(callback);
+    }
+
+    /**
+     * Get the guilds quests.
+     *
+     * @return The Future that will receive the result.
+     */
+    public Future<Response<List<Guild>>> getGuilds() {
+        return Ion.with(mContext)
+                .load(API_URL + "/guild")
+                .addHeader("Authorization", mAccountManager.getPassword(mAccount))
+                .as(new TypeToken<List<Guild>>() {
+                })
+                .withResponse();
+    }
+
+
 
     /**
      * Attempts to login.
