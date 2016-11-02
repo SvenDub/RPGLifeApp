@@ -76,7 +76,6 @@ public class MainMenuActivity extends AppCompatActivity {
                 binding.ImgCharacter.setImageBitmap(mUser.getCharacter().getCharacterSprite());
             } else {
                 finish();
-                startActivity(new Intent(MainMenuActivity.this, LoginActivity.class));
             }
         }
     };

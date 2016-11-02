@@ -12,9 +12,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -35,6 +36,8 @@ import questionablequality.rpglifeapp.provider.QuestProvider;
 public class QuestLogActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, ResultCallback<Status>, GoogleApiClient.ConnectionCallbacks {
 
     private static final int REQUEST_PERMISSION_LOCATION = 1;
+    public static final int GEOFENCE_RADIUS = 100;
+
     private ActivityQuestLogBinding binding;
 
     private QuestProvider mQuestProvider;
@@ -112,6 +115,18 @@ public class QuestLogActivity extends AppCompatActivity implements GoogleApiClie
                         .show();
             }
         });
+
+        binding.LstQuests.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Quest quest = mQuestAdapter.getItem(position);
+
+                Intent intent = new Intent(QuestLogActivity.this, QuestDetailActivity.class);
+                intent.putExtra("quest", quest.getId());
+
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -132,7 +147,7 @@ public class QuestLogActivity extends AppCompatActivity implements GoogleApiClie
             if (quest.getPlace() != null && quest.getProgress() < quest.getGoal()) {
                 mGeofenceList.add(new Geofence.Builder()
                         .setRequestId(Integer.toString(quest.getId()))
-                        .setCircularRegion(quest.getPlace().getLatLng().latitude, quest.getPlace().getLatLng().longitude, 100)
+                        .setCircularRegion(quest.getPlace().getLatLng().latitude, quest.getPlace().getLatLng().longitude, GEOFENCE_RADIUS)
                         .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
                         .setLoiteringDelay(1)
                         .setExpirationDuration(365 * 24 * 60 * 60 * 1000)
@@ -187,12 +202,12 @@ public class QuestLogActivity extends AppCompatActivity implements GoogleApiClie
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Toast.makeText(this, "Shit's broken yo", Toast.LENGTH_LONG).show();
+        Log.e("GMS", "Connection failed: " + connectionResult.getErrorMessage());
     }
 
     @Override
     public void onResult(@NonNull Status status) {
-        Toast.makeText(this, status.toString(), Toast.LENGTH_LONG).show();
+        Log.d("GEOFENCE", status.toString());
     }
 
     @Override

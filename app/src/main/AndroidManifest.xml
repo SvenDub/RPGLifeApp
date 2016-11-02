@@ -29,6 +29,7 @@
         <activity android:name=".QuestLogActivity"/>
         <activity android:name=".AddQuestActivity"/>
         <activity android:name=".GuildActivity"/>
+        <activity android:name=".QuestDetailActivity"/>
 
         <service android:name=".auth.AuthenticatorService">
             <intent-filter>
@@ -39,12 +40,12 @@
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator"/>
         </service>
-
         <service android:name=".GeofenceTransitionsIntentService"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAuztmQhez_OONm2G1xlqaiWIuwuO14f_8"/>
+
     </application>
 
 </manifest>

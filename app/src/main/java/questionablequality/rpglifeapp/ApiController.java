@@ -68,8 +68,7 @@ public class ApiController {
                     @Override
                     public void onCompleted(Exception e, Response<User> result) {
                         if (e != null || result.getException() != null || result.getResult() == null) {
-                            Toast.makeText(mContext, R.string.delete_account, Toast.LENGTH_LONG).show();
-                            mAccountManager.removeAccountExplicitly(mAccount);
+                            Toast.makeText(mContext, R.string.error_login, Toast.LENGTH_LONG).show();
                         }
                         callback.onCompleted(e, result);
                     }

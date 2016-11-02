@@ -97,6 +97,7 @@ public class QuestAdapter extends ArrayAdapter<Quest> {
                 pb.setProgress(requestedQuest.getProgress());
             }
         });
+        btn.setVisibility(requestedQuest.getPlace() == null ? View.VISIBLE : View.GONE);
 
         return view;
     }

@@ -16,7 +16,7 @@
     <string name="action_other">Other</string>
     <string name="action_options">Options</string>
     <string name="title_activity_add_quest">AddQuestActivity</string>
-    <string name="delete_account">Auth invalid. Deleting account.</string>
+    <string name="error_login">Could not login</string>
     <string name="error_add_quest">Could not add quest</string>
     <string name="filter">Filter</string>
     <string name="action_filter">Filter</string>
