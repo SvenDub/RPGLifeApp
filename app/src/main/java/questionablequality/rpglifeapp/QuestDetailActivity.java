@@ -1,8 +1,10 @@
 package questionablequality.rpglifeapp;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Response;
@@ -53,6 +56,15 @@ public class QuestDetailActivity extends AppCompatActivity implements OnMapReady
         // Data binding the data element "User"
         mApiController = new ApiController(this);
         mApiController.getQuests(mQuestCallback);
+
+        binding.btnNavigate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LatLng latLng = mQuest.getPlace().getLatLng();
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=" + latLng.latitude + "," + latLng.longitude));
+                startActivity(intent);
+            }
+        });
 
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,8 +123,11 @@ public class QuestDetailActivity extends AppCompatActivity implements OnMapReady
             mMap.addCircle(new CircleOptions().center(place.getLatLng()).radius(GEOFENCE_RADIUS));
 
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(), 15));
+            findViewById(R.id.map).setVisibility(View.VISIBLE);
+            binding.btnNavigate.setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.map).setVisibility(View.GONE);
+            binding.btnNavigate.setVisibility(View.GONE);
         }
     }
 }

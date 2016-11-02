@@ -70,8 +70,14 @@
             <Button
                 android:id="@+id/btn_back"
                 style="@style/BackButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/btn_navigate"
+                style="@style/DefaultButton"
+                android:layout_weight="1"
+                android:text="@string/action_navigate"
+                android:visibility="gone"/>
 
         </LinearLayout>
     </LinearLayout>

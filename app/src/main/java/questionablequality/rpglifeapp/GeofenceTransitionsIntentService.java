@@ -3,6 +3,7 @@ package questionablequality.rpglifeapp;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -121,6 +122,8 @@ public class GeofenceTransitionsIntentService extends IntentService implements G
     private void sendNotification(int id, Quest quest) {
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
+        PendingIntent intent = PendingIntent.getActivity(this, 0, new Intent(this, QuestLogActivity.class), PendingIntent.FLAG_ONE_SHOT);
+
         Notification notification = new Notification.Builder(this)
                 .setContentTitle(quest.getName())
                 .setContentText(quest.getDescription())
@@ -130,6 +133,7 @@ public class GeofenceTransitionsIntentService extends IntentService implements G
                 .setShowWhen(true)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setGroup("quests")
+                .setContentIntent(intent)
                 .build();
 
         notificationManager.notify(id, notification);

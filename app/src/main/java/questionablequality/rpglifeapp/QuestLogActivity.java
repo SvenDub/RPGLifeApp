@@ -150,7 +150,7 @@ public class QuestLogActivity extends AppCompatActivity implements GoogleApiClie
                         .setCircularRegion(quest.getPlace().getLatLng().latitude, quest.getPlace().getLatLng().longitude, GEOFENCE_RADIUS)
                         .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
                         .setLoiteringDelay(1)
-                        .setExpirationDuration(365 * 24 * 60 * 60 * 1000)
+                        .setExpirationDuration(31 * 24 * 60 * 60 * 1000)
                         .build()
                 );
             }
