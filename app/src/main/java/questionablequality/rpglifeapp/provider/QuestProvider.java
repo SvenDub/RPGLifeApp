@@ -43,9 +43,17 @@ public class QuestProvider {
         }
     }
     public List<Quest> ReturnGuildQuests(){
-        //TODO
-
-        return new ArrayList<>();
+        try {
+            Response<List<Quest>> listResponse = mApiController.getGuildQuests().get();
+            if (listResponse.getResult() != null && listResponse.getException() == null) {
+                return listResponse.getResult();
+            } else {
+                return new ArrayList<>();
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 
     public boolean addQuest(Quest quest) {
@@ -58,7 +66,11 @@ public class QuestProvider {
     }
 
     public boolean addGuildQuest(Quest quest) {
-        //TODO
-        return false;
+        try {
+            return mApiController.addGuildQuest(quest).get().getResult() != null;
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

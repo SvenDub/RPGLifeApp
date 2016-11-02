@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Response;
@@ -18,7 +19,7 @@ import questionablequality.rpglifeapp.R;
 import questionablequality.rpglifeapp.adapter.GuildAdapter;
 import questionablequality.rpglifeapp.adapter.QuestAdapter;
 import questionablequality.rpglifeapp.data.User;
-import questionablequality.rpglifeapp.provider.GuildMemberProvider;
+import questionablequality.rpglifeapp.provider.GuildProvider;
 import questionablequality.rpglifeapp.provider.QuestProvider;
 
 /**
@@ -40,10 +41,12 @@ public class GuildFragment extends Fragment {
     private QuestProvider mGuildQuestProvider;
     private QuestAdapter mQuestAdapter;
 
-    private GuildMemberProvider mGuildMemberProvider;
+    private GuildProvider mGuildProvider;
     private GuildAdapter mGuildAdapter;
 
-    Button addquest;
+    private Button addquest;
+
+    private View view;
 
     public GuildFragment() {
         // Required empty public constructor
@@ -68,27 +71,11 @@ public class GuildFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_guild, container, false);
+        view = inflater.inflate(R.layout.fragment_guild, container, false);
 
         addquest = (Button)view.findViewById(R.id.BtnAddGuildQuest);
 
         mApiController = new ApiController(view.getContext());
-
-        /**
-        //binds the adapter containing the quests.
-        mGuildQuestProvider = new QuestProvider(view.getContext());
-        mQuestAdapter = new QuestAdapter(view.getContext(), mGuildQuestProvider.ReturnGuildQuests());
-        ListView quests = (ListView)view.findViewById(R.id.LstQuests);
-        quests.setAdapter(mQuestAdapter);
-
-        //binds the adapter containing the guildmembers.
-        mGuildMemberProvider = new GuildMemberProvider(view.getContext());
-        mGuildAdapter = new GuildAdapter(view.getContext(), mGuildMemberProvider.ReturnMembers());
-        ListView members = (ListView)view.findViewById(R.id.LstMembers);
-        members.setAdapter(mGuildAdapter);
-         **/
-
-
 
         return view;
     }
@@ -125,7 +112,7 @@ public class GuildFragment extends Fragment {
 
     }
 
-    private FutureCallback<Response<User >> mUserCallback = new FutureCallback<Response<User>>() {
+    private FutureCallback<Response<User>> mUserCallback = new FutureCallback<Response<User>>() {
         @Override
         public void onCompleted(Exception e, Response<User> result) {
             mUser = result.getResult();
@@ -153,6 +140,18 @@ public class GuildFragment extends Fragment {
                     }
                 });
             }
+
+            //binds the adapter containing the quests.
+            mGuildQuestProvider = new QuestProvider(view.getContext());
+            mQuestAdapter = new QuestAdapter(view.getContext(), mGuildQuestProvider.ReturnGuildQuests());
+            ListView quests = (ListView)view.findViewById(R.id.LstQuests);
+            quests.setAdapter(mQuestAdapter);
+
+            //binds the adapter containing the guildmembers.
+            mGuildProvider = new GuildProvider(view.getContext());
+            mGuildAdapter = new GuildAdapter(view.getContext(), mGuildProvider.ReturnGuildMembers(mUser));
+            ListView members = (ListView)view.findViewById(R.id.LstMembers);
+            members.setAdapter(mGuildAdapter);
 
         }
     };
