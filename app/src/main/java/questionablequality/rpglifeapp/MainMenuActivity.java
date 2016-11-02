@@ -29,7 +29,6 @@ public class MainMenuActivity extends AppCompatActivity {
 
         //Data binding the data element "User"
         mApiController = new ApiController(this);
-        mApiController.getUser(mUserCallback);
 
         //Setting the Buttons OnClick events
         binding.btnQuestLog.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +60,13 @@ public class MainMenuActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mApiController.getUser(mUserCallback);
     }
 
     private FutureCallback<Response<User >> mUserCallback = new FutureCallback<Response<User>>() {

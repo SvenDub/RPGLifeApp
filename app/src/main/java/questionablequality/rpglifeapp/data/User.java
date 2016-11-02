@@ -14,46 +14,50 @@ public class User implements Serializable {
     private int id;
     private String username;
     private Character character;
+    private int xp;
 
     private Guild guild;
 
     /**
      * Creates a character and returns it.
-     * @param c Context, used for retrieving the spritesheet.
+     *
+     * @param context   Context, used for retrieving the spritesheet.
      * @param charIndex the location of the character on the spritesheet. 0-10 is recommended.
      * @return the created character.
      */
-    public Character makeCharacter(Context c, int charIndex){
-        return character = new Character(c, charIndex);
+    public Character makeCharacter(Context context, int charIndex) {
+        return character = new Character(context, charIndex, xp);
     }
 
     /**
      * returns the character.
+     *
      * @return the character.
      */
-    public Character getCharacter(){
+    public Character getCharacter() {
         return character;
     }
 
     /**
      * returns the username.
+     *
      * @return the username.
      */
-    public String getUsername(){
+    public String getUsername() {
         return username;
     }
 
-    public String getInfo(){
+    public String getInfo() {
         String returnstring = "";
 
         Iterator it = character.getAttributes();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             returnstring += character.getAttributeString(it.next().toString()) + "\n";
         }
         return returnstring;
     }
 
-    public boolean hasGuild(){
+    public boolean hasGuild() {
         return (guild != null);
     }
 

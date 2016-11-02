@@ -9,10 +9,6 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by Tobi on 30-Sep-16.
- */
-
 public class Quest {
     private int id;
 
@@ -72,11 +68,11 @@ public class Quest {
     }
 
     public void setProgress(int progress) {
-        this.progress = progress;
+        this.progress = Math.min(progress, goal);
     }
 
     public void increase() {
-        progress++;
+        setProgress(progress + 1);
     }
 
     public void setPlace(Place place) {

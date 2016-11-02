@@ -10,7 +10,7 @@ import java.util.Random;
 public class Guild {
     private String name;
     private int guildLeader;
-    private List<User> members;
+    private List<Integer> members;
 
     private List<Quest> quests;
 
@@ -21,7 +21,7 @@ public class Guild {
         code = generateCode();
     }
 
-    public Guild(String name, List<User> members, List<Quest> quests) {
+    public Guild(String name, List<Integer> members, List<Quest> quests) {
         this.name = name;
         this.members = members;
         this.quests = quests;
@@ -38,8 +38,9 @@ public class Guild {
         return c;
     }
 
-    public User getGuildLeader(){
-        return members.get(guildLeader);
+    public User getGuildLeader() {
+        throw new RuntimeException("Not Implemented");
+        //return members.get(guildLeader);
     }
 
     public void setGuildLeader(int memberindex){
@@ -47,7 +48,8 @@ public class Guild {
     }
 
     public String getGuildLeaderString(){
-        return (guildLeader != -1) ? "Guildleader: " + members.get(guildLeader).getUsername() : "No guildleader.";
+        throw new RuntimeException("Not Implemented");
+        //return (guildLeader != -1) ? "Guildleader: " + members.get(guildLeader).getUsername() : "No guildleader.";
     }
 
     public String getCodeString(){
@@ -59,11 +61,13 @@ public class Guild {
     }
 
     public List<User> getMembers() {
-        return members;
+        throw new RuntimeException("Not Implemented");
+        //return members;
     }
 
     public void addMember(User member) {
-        members.add(member);
+        throw new RuntimeException("Not Implemented");
+        //members.add(member);
     }
 
     public List<Quest> getQuests() {
