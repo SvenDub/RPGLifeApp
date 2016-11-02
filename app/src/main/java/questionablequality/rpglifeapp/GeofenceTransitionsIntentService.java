@@ -108,7 +108,7 @@ public class GeofenceTransitionsIntentService extends IntentService implements G
                 }
             }
 
-            if (mGoogleApiClient.isConnected()) {
+            if (mGoogleApiClient.isConnected() && !doneQuests.isEmpty()) {
                 LocationServices.GeofencingApi.removeGeofences(mGoogleApiClient, doneQuests);
             } else {
                 mRemoveQueue.add(doneQuests);
@@ -141,7 +141,9 @@ public class GeofenceTransitionsIntentService extends IntentService implements G
         do {
             doneQuests = mRemoveQueue.poll();
             if (doneQuests != null) {
-                LocationServices.GeofencingApi.removeGeofences(mGoogleApiClient, doneQuests);
+                if (!doneQuests.isEmpty()) {
+                    LocationServices.GeofencingApi.removeGeofences(mGoogleApiClient, doneQuests);
+                }
             }
         } while (doneQuests != null);
     }

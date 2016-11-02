@@ -26,15 +26,15 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/quest_name"
-                android:inputType="textPersonName"/>
+                android:inputType="text"/>
 
             <EditText
                 android:id="@+id/TxtQuestDescription"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/quest_description"
-                android:inputType="textPersonName"/>
+                android:inputType="textMultiLine"/>
 
             <Spinner
                 android:id="@+id/QuestType"
@@ -49,25 +49,42 @@
                 android:hint="@string/quest_goal"
                 android:inputType="number"/>
 
-            <Button
-                android:id="@+id/btn_add_location"
-                style="@style/DefaultButton"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/action_add_location"/>
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_remove_location"
-                style="@style/DefaultButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:text="@string/action_remove_location"/>
+                <Button
+                    android:id="@+id/btn_add_location"
+                    style="@style/DefaultButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/action_add_location"/>
+
+                <Button
+                    android:id="@+id/btn_remove_location"
+                    style="@style/DefaultButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:text="@string/action_remove_location"/>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/txt_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
+            <fragment android:id="@+id/map"
+                      android:name="com.google.android.gms.maps.SupportMapFragment"
+                      xmlns:android="http://schemas.android.com/apk/res/android"
+                      xmlns:tools="http://schemas.android.com/tools"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:layout_marginTop="@dimen/activity_vertical_margin"
+                      tools:context=".AddQuestActivity"/>
         </LinearLayout>
 
         <LinearLayout

@@ -161,12 +161,16 @@ public class QuestLogActivity extends AppCompatActivity implements GoogleApiClie
             return;
         }
 
-        if(!mGeofenceList.isEmpty()){
-            LocationServices.GeofencingApi.addGeofences(
-                    mGoogleApiClient,
-                    getGeofencingRequest(),
-                    getGeofencePendingIntent()
-            ).setResultCallback(this);
+        if (!mGeofenceList.isEmpty()) {
+            try {
+                LocationServices.GeofencingApi.addGeofences(
+                        mGoogleApiClient,
+                        getGeofencingRequest(),
+                        getGeofencePendingIntent()
+                ).setResultCallback(this);
+            } catch (IllegalArgumentException e) {
+                Log.e("GEOFENCE", "Could not create geofence request", e);
+            }
         }
 
     }
