@@ -1,14 +1,30 @@
 package questionablequality.rpglifeapp;
 
+import android.Manifest;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.Geofence;
+import com.google.android.gms.location.GeofencingRequest;
+import com.google.android.gms.location.LocationServices;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import questionablequality.rpglifeapp.adapter.QuestAdapter;
@@ -16,16 +32,29 @@ import questionablequality.rpglifeapp.data.Quest;
 import questionablequality.rpglifeapp.databinding.ActivityQuestLogBinding;
 import questionablequality.rpglifeapp.provider.QuestProvider;
 
-public class QuestLogActivity extends AppCompatActivity {
+public class QuestLogActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, ResultCallback<Status>, GoogleApiClient.ConnectionCallbacks {
 
+    private static final int REQUEST_PERMISSION_LOCATION = 1;
     private ActivityQuestLogBinding binding;
 
     private QuestProvider mQuestProvider;
     private QuestAdapter mQuestAdapter;
 
+    private GoogleApiClient mGoogleApiClient;
+
+    private List<Geofence> mGeofenceList = new ArrayList<>();
+    private PendingIntent mGeofencePendingIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .build();
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_quest_log);
 
         binding.BtnBack.setOnClickListener(new View.OnClickListener() {
@@ -88,8 +117,89 @@ public class QuestLogActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        if (mGoogleApiClient.isConnected()) {
+            reloadQuests();
+        }
+    }
+
+    private void reloadQuests() {
         List<Quest> quests = mQuestProvider.ReturnQuests();
         mQuestAdapter.clear();
         mQuestAdapter.addAll(quests);
+
+        for (Quest quest : quests) {
+            if (quest.getPlace() != null && quest.getProgress() < quest.getGoal()) {
+                mGeofenceList.add(new Geofence.Builder()
+                        .setRequestId(Integer.toString(quest.getId()))
+                        .setCircularRegion(quest.getPlace().getLatLng().latitude, quest.getPlace().getLatLng().longitude, 100)
+                        .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
+                        .setLoiteringDelay(1)
+                        .setExpirationDuration(365 * 24 * 60 * 60 * 1000)
+                        .build()
+                );
+            }
+        }
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_PERMISSION_LOCATION);
+            return;
+        }
+
+        LocationServices.GeofencingApi.addGeofences(
+                mGoogleApiClient,
+                getGeofencingRequest(),
+                getGeofencePendingIntent()
+        ).setResultCallback(this);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case REQUEST_PERMISSION_LOCATION:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    reloadQuests();
+                }
+                break;
+        }
+    }
+
+    private GeofencingRequest getGeofencingRequest() {
+        GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
+        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_DWELL);
+        builder.addGeofences(mGeofenceList);
+        return builder.build();
+    }
+
+    private PendingIntent getGeofencePendingIntent() {
+        // Reuse the PendingIntent if we already have it.
+        if (mGeofencePendingIntent != null) {
+            return mGeofencePendingIntent;
+        }
+        Intent intent = new Intent(this, GeofenceTransitionsIntentService.class);
+        // We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when
+        // calling addGeofences() and removeGeofences().
+        return PendingIntent.getService(this, 0, intent, PendingIntent.
+                FLAG_UPDATE_CURRENT);
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Toast.makeText(this, "Shit's broken yo", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onResult(@NonNull Status status) {
+        Toast.makeText(this, status.toString(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        reloadQuests();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
     }
 }

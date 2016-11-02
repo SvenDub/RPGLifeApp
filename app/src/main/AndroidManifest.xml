@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.READ_PROFILE"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -27,6 +28,7 @@
         <activity android:name=".MainMenuActivity"/>
         <activity android:name=".QuestLogActivity"/>
         <activity android:name=".AddQuestActivity"/>
+        <activity android:name=".GuildActivity"/>
 
         <service android:name=".auth.AuthenticatorService">
             <intent-filter>
@@ -38,7 +40,7 @@
                 android:resource="@xml/authenticator"/>
         </service>
 
-        <activity android:name=".GuildActivity"/>
+        <service android:name=".GeofenceTransitionsIntentService"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
