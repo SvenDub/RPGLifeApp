@@ -66,6 +66,8 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        binding.ImgCharacter.setVisibility(View.GONE);
+        binding.pbLoad.setVisibility(View.VISIBLE);
         mApiController.getUser(mUserCallback);
     }
 
@@ -80,6 +82,9 @@ public class MainMenuActivity extends AppCompatActivity {
                 //Dummy character creation
                 mUser.makeCharacter(MainMenuActivity.this, 0);
                 binding.ImgCharacter.setImageBitmap(mUser.getCharacter().getCharacterSprite());
+
+                binding.ImgCharacter.setVisibility(View.VISIBLE);
+                binding.pbLoad.setVisibility(View.GONE);
             } else {
                 finish();
             }
