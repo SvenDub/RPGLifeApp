@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Response;
 
+import java.util.List;
+
 import questionablequality.rpglifeapp.AddQuestActivity;
 import questionablequality.rpglifeapp.ApiController;
 import questionablequality.rpglifeapp.QuestDetailActivity;
@@ -97,6 +99,18 @@ public class GuildFragment extends Fragment {
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (mGuildQuestProvider != null) {
+            List<Quest> quests = mGuildQuestProvider.ReturnQuests();
+            mGuildQuestAdapter.clear();
+            mGuildQuestAdapter.addAll(quests);
+
         }
     }
 
