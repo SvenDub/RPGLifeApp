@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Quest">
+        <item>Eat an apple a day for a week.</item>
+        <item>Drink tea with your mum once a week for a month.</item>
+        <item>Sleep 8 hours each night.</item>
+        <item>Go to school every day for a month.</item>
+        <item>Go to the gym three times a week for a season.</item>
+    </string-array>
+
+</resources>
