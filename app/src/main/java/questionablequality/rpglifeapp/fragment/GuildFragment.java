@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Response;
@@ -76,6 +77,7 @@ public class GuildFragment extends Fragment {
         addquest = (Button)view.findViewById(R.id.BtnAddGuildQuest);
 
         mApiController = new ApiController(view.getContext());
+        mApiController.getUser(mUserCallback);
 
         return view;
     }
@@ -118,9 +120,7 @@ public class GuildFragment extends Fragment {
             mUser = result.getResult();
 
             if(mUser.getGuild().hasGuildLeader()){
-                if(!(mUser == mUser.getGuild().getGuildLeader())){
-                    addquest.setEnabled(false);
-                }else{
+                if(mUser.getId() == mUser.getGuild().getGuildLeader(view.getContext()).getId()){
                     addquest.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -129,16 +129,9 @@ public class GuildFragment extends Fragment {
                             startActivity(intent);
                         }
                     });
+                }else{
+                    addquest.setEnabled(false);
                 }
-            }else{
-                addquest.setText("Claim Guildleadership");
-                addquest.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mUser.getGuild().setGuildLeader(mUser.getId());
-                        //TODO: save guild
-                    }
-                });
             }
 
             //binds the adapter containing the quests.
@@ -152,6 +145,21 @@ public class GuildFragment extends Fragment {
             mGuildAdapter = new GuildAdapter(view.getContext(), mGuildProvider.ReturnGuildMembers(mUser));
             ListView members = (ListView)view.findViewById(R.id.LstMembers);
             members.setAdapter(mGuildAdapter);
+
+            TextView text = (TextView)view.findViewById(R.id.TxtGuilLeader);
+            text.setText(mUser.getGuild().getGuildLeaderString(view.getContext()));
+
+            text = (TextView)view.findViewById(R.id.TxtCode);
+            text.setText(mUser.getGuild().getCodeString());
+
+
+            Button BtnBack = (Button) view.findViewById(R.id.BtnGuildBack);
+            BtnBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().finish();
+                }
+            });
 
         }
     };

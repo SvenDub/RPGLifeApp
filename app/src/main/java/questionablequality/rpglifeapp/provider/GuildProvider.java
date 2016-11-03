@@ -46,6 +46,6 @@ public class GuildProvider {
     }
 
     public List<User> ReturnGuildMembers(User user) {
-        return user.getGuild().getMembers();
+        return user.getGuild().getMembers(context);
     }
 }

@@ -77,6 +77,31 @@ public class ApiController {
     }
 
     /**
+     * Get the user.
+     *
+     * @param callback The callback that will receive the result.
+     */
+    public void getUserById(final FutureCallback<Response<User>> callback, int id) {
+        getUserById(id)
+                .setCallback(callback);
+    }
+
+    /**
+     * Get the users quests.
+     *
+     * @return The Future that will receive the result.
+     */
+    public Future<Response<User>> getUserById(int id) {
+        return Ion.with(mContext)
+                .load(API_URL + "/user/" + id)
+                .addHeader("Authorization", mAccountManager.getPassword(mAccount))
+                .as(new TypeToken<User>() {
+                })
+                .withResponse();
+    }
+
+
+    /**
      * Get the user's quests.
      *
      * @param callback The callback that will receive the result.
@@ -132,7 +157,7 @@ public class ApiController {
      * @param callback The callback that will receive the result.
      */
     public void getGuildQuests(final FutureCallback<Response<List<Quest>>> callback) {
-        getQuests()
+        getGuildQuests()
                 .setCallback(callback);
     }
 
@@ -151,7 +176,7 @@ public class ApiController {
     }
 
     public void addGuildQuest(Quest quest, final FutureCallback<Response<Quest>> callback) {
-        addQuest(quest).setCallback(callback);
+        addGuildQuest(quest).setCallback(callback);
     }
 
     /**
@@ -165,7 +190,7 @@ public class ApiController {
     }
 
     public void saveGuildQuest(Quest quest, final FutureCallback<Response<Quest>> callback){
-        saveQuest(quest).setCallback(callback);
+        saveGuildQuest(quest).setCallback(callback);
     }
 
 

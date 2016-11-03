@@ -1,7 +1,13 @@
 package questionablequality.rpglifeapp.data;
 
+import android.content.Context;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
+
+import questionablequality.rpglifeapp.ApiController;
 
 /**
  * Created by Tobi on 01-Nov-16.
@@ -14,7 +20,7 @@ public class Guild {
 
     private List<Quest> quests;
 
-    private final String code;
+    private String code;
 
     public Guild(String name) {
         this.name = name;
@@ -38,21 +44,25 @@ public class Guild {
         return c;
     }
 
-    public User getGuildLeader() {
-        throw new RuntimeException("Not Implemented");
-        //return members.get(guildLeader);
+    public User getGuildLeader(Context context) {
+        ApiController api = new ApiController(context);
+        try {
+            return api.getUserById(guildLeader).get().getResult();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public void setGuildLeader(int memberindex){
-        this.guildLeader = guildLeader;
-    }
 
-    public String getGuildLeaderString(){
-        throw new RuntimeException("Not Implemented");
-        //return (guildLeader != -1) ? "Guildleader: " + members.get(guildLeader).getUsername() : "No guildleader.";
+    public String getGuildLeaderString(Context context){
+        return "Guildleader: " + getGuildLeader(context).getUsername();
     }
 
     public String getCodeString(){
+        if(code == null) {
+            code = generateCode();
+        }
         return "Code: " + code;
     }
 
@@ -60,14 +70,17 @@ public class Guild {
         return name;
     }
 
-    public List<User> getMembers() {
-        throw new RuntimeException("Not Implemented");
-        //return members;
-    }
-
-    public void addMember(User member) {
-        throw new RuntimeException("Not Implemented");
-        //members.add(member);
+    public List<User> getMembers(Context context) {
+        ApiController api = new ApiController(context);
+        ArrayList<User> list= new ArrayList<>();
+        for(Integer u : members){
+            try {
+                list.add(api.getUserById(u).get().getResult());
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+        return list;
     }
 
     public List<Quest> getQuests() {

@@ -57,7 +57,7 @@ public class GuildAdapter extends ArrayAdapter<User>{
 
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.quest_list_item, null);
+            view = inflater.inflate(R.layout.guild_list_item, null);
         }
 
         TextView tv = (TextView)view.findViewById(R.id.txtMemberName);
