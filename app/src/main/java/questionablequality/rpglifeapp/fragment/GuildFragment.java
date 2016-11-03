@@ -18,6 +18,7 @@ import questionablequality.rpglifeapp.AddQuestActivity;
 import questionablequality.rpglifeapp.ApiController;
 import questionablequality.rpglifeapp.R;
 import questionablequality.rpglifeapp.adapter.GuildAdapter;
+import questionablequality.rpglifeapp.adapter.GuildQuestAdapter;
 import questionablequality.rpglifeapp.adapter.QuestAdapter;
 import questionablequality.rpglifeapp.data.User;
 import questionablequality.rpglifeapp.provider.GuildProvider;
@@ -40,7 +41,7 @@ public class GuildFragment extends Fragment {
     private ApiController mApiController;
 
     private QuestProvider mGuildQuestProvider;
-    private QuestAdapter mQuestAdapter;
+    private GuildQuestAdapter mGuildQuestAdapter;
 
     private GuildProvider mGuildProvider;
     private GuildAdapter mGuildAdapter;
@@ -136,9 +137,9 @@ public class GuildFragment extends Fragment {
 
             //binds the adapter containing the quests.
             mGuildQuestProvider = new QuestProvider(view.getContext());
-            mQuestAdapter = new QuestAdapter(view.getContext(), mGuildQuestProvider.ReturnGuildQuests());
+            mGuildQuestAdapter = new GuildQuestAdapter(view.getContext(), mGuildQuestProvider.ReturnGuildQuests());
             ListView quests = (ListView)view.findViewById(R.id.LstQuests);
-            quests.setAdapter(mQuestAdapter);
+            quests.setAdapter(mGuildQuestAdapter);
 
             //binds the adapter containing the guildmembers.
             mGuildProvider = new GuildProvider(view.getContext());
