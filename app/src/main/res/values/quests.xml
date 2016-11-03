@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="Quest">
-        <item>Eat an apple a day for a week.</item>
-        <item>Drink tea with your mum once a week for a month.</item>
-        <item>Sleep 8 hours each night.</item>
-        <item>Go to school every day for a month.</item>
-        <item>Go to the gym three times a week for a season.</item>
+        <item>Health - Eat an apple a day.</item>
+        <item>Health - Sleep 8 hours each night.</item>
+        <item>Health - Go to the gym three times a week.</item>
+        <item>Social - Drink tea with your mum once a week.</item>
+        <item>Social - Go to the pub.</item>
+        <item>Education - Go to school every day.</item>
+        <item>Education - Learn a new skill.</item>
     </string-array>
 
 </resources>
