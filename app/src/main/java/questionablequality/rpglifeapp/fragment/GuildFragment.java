@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,10 +17,11 @@ import com.koushikdutta.ion.Response;
 
 import questionablequality.rpglifeapp.AddQuestActivity;
 import questionablequality.rpglifeapp.ApiController;
+import questionablequality.rpglifeapp.QuestDetailActivity;
 import questionablequality.rpglifeapp.R;
 import questionablequality.rpglifeapp.adapter.GuildAdapter;
 import questionablequality.rpglifeapp.adapter.GuildQuestAdapter;
-import questionablequality.rpglifeapp.adapter.QuestAdapter;
+import questionablequality.rpglifeapp.data.Quest;
 import questionablequality.rpglifeapp.data.User;
 import questionablequality.rpglifeapp.provider.GuildProvider;
 import questionablequality.rpglifeapp.provider.QuestProvider;
@@ -47,6 +49,7 @@ public class GuildFragment extends Fragment {
     private GuildAdapter mGuildAdapter;
 
     private Button addquest;
+    private ListView mLstQuests;
 
     private View view;
 
@@ -76,6 +79,8 @@ public class GuildFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_guild, container, false);
 
         addquest = (Button)view.findViewById(R.id.BtnAddGuildQuest);
+
+        mLstQuests = (ListView) view.findViewById(R.id.LstQuests);
 
         mApiController = new ApiController(view.getContext());
         mApiController.getUser(mUserCallback);
@@ -162,6 +167,17 @@ public class GuildFragment extends Fragment {
                 }
             });
 
+            mLstQuests.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Quest quest = mGuildQuestAdapter.getItem(position);
+
+                    Intent intent = new Intent(GuildFragment.this.getActivity(), QuestDetailActivity.class);
+                    intent.putExtra("quest", quest.getId());
+
+                    startActivity(intent);
+                }
+            });
         }
     };
 }

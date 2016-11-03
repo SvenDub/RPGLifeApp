@@ -66,12 +66,7 @@ public class QuestLogActivity extends AppCompatActivity implements GoogleApiClie
                 finish();
             }
         });
-        binding.BtnFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
         binding.BtnAddQuest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -21,8 +21,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Response;
 
-import java.util.List;
-
 import questionablequality.rpglifeapp.data.Quest;
 import questionablequality.rpglifeapp.databinding.ActivityQuestDetailBinding;
 
@@ -55,7 +53,7 @@ public class QuestDetailActivity extends AppCompatActivity implements OnMapReady
 
         // Data binding the data element "User"
         mApiController = new ApiController(this);
-        mApiController.getQuests(mQuestCallback);
+        mApiController.getQuest(mQuestCallback, mQuestId);
 
         binding.btnNavigate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,18 +76,11 @@ public class QuestDetailActivity extends AppCompatActivity implements OnMapReady
         mapFragment.getMapAsync(this);
     }
 
-    private FutureCallback<Response<List<Quest>>> mQuestCallback = new FutureCallback<Response<List<Quest>>>() {
+    private FutureCallback<Response<Quest>> mQuestCallback = new FutureCallback<Response<Quest>>() {
         @Override
-        public void onCompleted(Exception e, Response<List<Quest>> result) {
+        public void onCompleted(Exception e, Response<Quest> result) {
             if (e == null && result.getException() == null && result.getResult() != null) {
-                List<Quest> quests = result.getResult();
-
-                for (Quest quest : quests) {
-                    if (quest.getId() == mQuestId) {
-                        mQuest = quest;
-                        break;
-                    }
-                }
+                mQuest = result.getResult();
 
                 binding.setQuest(mQuest);
 

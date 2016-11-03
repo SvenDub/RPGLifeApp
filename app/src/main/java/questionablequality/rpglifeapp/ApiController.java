@@ -125,6 +125,25 @@ public class ApiController {
                 .withResponse();
     }
 
+    /**
+     * Get the user's quests.
+     *
+     * @param callback The callback that will receive the result.
+     */
+    public void getQuest(final FutureCallback<Response<Quest>> callback, int id) {
+        getQuest(id)
+                .setCallback(callback);
+    }
+
+    /**
+     * Get the users quests.
+     *
+     * @return The Future that will receive the result.
+     */
+    public Future<Response<Quest>> getQuest(int id) {
+        return getObject("/quest/" + id, Quest.class);
+    }
+
     public void addQuest(Quest quest, final FutureCallback<Response<Quest>> callback) {
         addQuest(quest).setCallback(callback);
     }
