@@ -20,13 +20,10 @@
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin">
 
-            <EditText
+            <Spinner
                 android:id="@+id/TxtQuestName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/quest_name"
-                android:inputType="text"/>
+                android:layout_height="wrap_content"/>
 
             <EditText
                 android:id="@+id/TxtQuestDescription"
@@ -35,11 +32,6 @@
                 android:ems="10"
                 android:hint="@string/quest_description"
                 android:inputType="textMultiLine"/>
-
-            <Spinner
-                android:id="@+id/QuestType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
 
             <EditText
                 android:id="@+id/TxtSetGoalAmount"

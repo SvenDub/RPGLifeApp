@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -51,6 +52,9 @@ public class AddQuestActivity extends AppCompatActivity implements OnMapReadyCal
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_quest);
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.Quest));
+        binding.TxtQuestName.setAdapter(adapter);
+
         findViewById(R.id.map).setVisibility(View.GONE);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -62,9 +66,9 @@ public class AddQuestActivity extends AppCompatActivity implements OnMapReadyCal
             public void onClick(View v) {
                 Quest quest = null;
                 if (mPlace != null) {
-                    quest = new Quest(binding.TxtQuestName.getText().toString(), binding.TxtQuestDescription.getText().toString(), Integer.parseInt(binding.TxtSetGoalAmount.getText().toString()), mPlace);
+                    quest = new Quest(binding.TxtQuestName.getSelectedItem().toString(), binding.TxtQuestDescription.getText().toString(), Integer.parseInt(binding.TxtSetGoalAmount.getText().toString()), mPlace);
                 } else {
-                    quest = new Quest(binding.TxtQuestName.getText().toString(), binding.TxtQuestDescription.getText().toString(), Integer.parseInt(binding.TxtSetGoalAmount.getText().toString()));
+                    quest = new Quest(binding.TxtQuestName.getSelectedItem().toString(), binding.TxtQuestDescription.getText().toString(), Integer.parseInt(binding.TxtSetGoalAmount.getText().toString()));
                 }
 
                 if (isGuildQuest) {
