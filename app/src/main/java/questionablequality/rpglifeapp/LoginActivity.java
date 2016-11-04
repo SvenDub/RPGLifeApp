@@ -8,6 +8,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
@@ -18,7 +19,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -48,6 +51,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
+    public static final int REQUEST_GET_ACCOUNTS = 1;
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -68,9 +72,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
 
         mAccountManager = AccountManager.get(this);
-        mApiController = new ApiController(this);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS) == PackageManager.PERMISSION_GRANTED) {
+            mApiController = new ApiController(this);
             Account[] accounts = mAccountManager.getAccountsByType("questionablequality.rpglifeapp");
             if (accounts.length > 0) {
                 finish();
@@ -78,7 +82,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return;
             }
         } else {
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.GET_ACCOUNTS}, 1);
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.GET_ACCOUNTS}, REQUEST_GET_ACCOUNTS);
         }
 
         //sets the view binding.
@@ -310,6 +314,37 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected void onCancelled() {
             mAuthTask = null;
             showProgress(false);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case REQUEST_GET_ACCOUNTS:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mApiController = new ApiController(this);
+                    @SuppressWarnings("MissingPermission")
+                    Account[] accounts = mAccountManager.getAccountsByType("questionablequality.rpglifeapp");
+                    if (accounts.length > 0) {
+                        finish();
+                        startActivity(new Intent(this, MainMenuActivity.class));
+                        return;
+                    }
+                } else {
+                    new AlertDialog.Builder(this)
+                            .setTitle(R.string.dialog_permission_account_title)
+                            .setMessage(R.string.dialog_permission_account_message)
+                            .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                @Override
+                                public void onDismiss(DialogInterface dialog) {
+                                    finish();
+                                }
+                            })
+                            .show();
+                }
+                break;
         }
     }
 }

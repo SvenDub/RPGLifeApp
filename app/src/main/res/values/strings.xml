@@ -28,4 +28,6 @@
     <string name="geofence_transition_invalid_type">Invalid geofence type %d</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="action_navigate">Take me there!</string>
+    <string name="dialog_permission_account_title">Missing permission</string>
+    <string name="dialog_permission_account_message">This app requires the accounts permission to function. Please enable it to continue using this app.</string>
 </resources>

@@ -36,7 +36,7 @@ public class ApiController {
 
     private Context mContext;
 
-    public ApiController(Context context) {
+    public ApiController(Context context) throws SecurityException {
         mContext = context;
 
         mAccountManager = AccountManager.get(mContext);
@@ -44,10 +44,11 @@ public class ApiController {
         isLoggedIn();
     }
 
-    public boolean isLoggedIn() {
+    public boolean isLoggedIn() throws SecurityException {
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
-            throw new RuntimeException("Missing permissions"); // TODO Handle gracefully
+            throw new SecurityException("Missing permissions");
         }
+
         Account[] accounts = mAccountManager.getAccountsByType(AccountAuthenticator.ACCOUNT_TYPE);
 
         if (accounts.length > 0) {
